@@ -23,9 +23,11 @@
             <% else %>
               <p><%= report.description %>
             <% end %>
+
             <% if report.interval %>
               , interval <%= distance_of_time_in_words(Time.now, Time.now + report.interval, true, { :highest_measure_only => true }) %>
             <% end %></p>
+
           </div>
         </div>
       </div>

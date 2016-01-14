@@ -1,8 +1,4 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  rescue_from ActiveRecord::RecordInvalid do |exception|
-    redirect_to root_path, :alert => exception.message
-  end
-
   def failure
     flash[:alert] = "Error signing in with #{ENV['OMNIAUTH']}"
     redirect_to root_path
@@ -20,7 +16,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     @user = User.from_omniauth(auth)
-
     if @user.persisted?
       sign_in_and_redirect @user, :event => :authentication
     else

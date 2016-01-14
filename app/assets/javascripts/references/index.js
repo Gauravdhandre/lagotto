@@ -1,7 +1,6 @@
 /*global d3 */
 
 var params = d3.select("#api_key");
-
 if (!params.empty()) {
   var api_key = params.attr('data-api_key');
   var page = params.attr('data-page');

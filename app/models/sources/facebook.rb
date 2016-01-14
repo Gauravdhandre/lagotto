@@ -1,8 +1,12 @@
 class Facebook < Source
+  
   def get_query_url(work, options = {})
-    fail ArgumentError, "No Facebook access token." unless get_access_token
+    if fail ArgumentError
+      p  "No Facebook access token." 
+    else
+     get_access_token
+    end 
     return {} unless work.get_url
-
     # use depreciated v2.0 API if url_linkstat is used
     if url_linkstat.present?
       URI.escape(url_linkstat % { access_token: access_token, query_url: work.canonical_url_escaped })
@@ -11,6 +15,7 @@ class Facebook < Source
     end
   end
 
+ 
   def request_options
     { bearer: access_token }
   end
@@ -72,7 +77,10 @@ class Facebook < Source
   end
 
   def get_authentication_url
+    # client_id = 512796102214470
+    # client_secret = 'cd83dd962110b386f2e9895a4db44caf'
     authentication_url % { client_id: client_id, client_secret: client_secret }
+
   end
 
   def config_fields
@@ -80,11 +88,14 @@ class Facebook < Source
   end
 
   def authentication_url
+    #"https://graph.facebook.com/oauth/access_token?client_id=512796102214470&client_secret=cd83dd962110b386f2e9895a4db44caf&grant_type=client_credentials"
     "https://graph.facebook.com/oauth/access_token?client_id=%{client_id}&client_secret=%{client_secret}&grant_type=client_credentials"
   end
 
   def url
+    #access_token = '512796102214470|W_LPEqMadPUuI2PdXeRUlHUBkRI'
     "https://graph.facebook.com/v2.1/?access_token=%{access_token}&id=%{query_url}"
+    #"https://graph.facebook.com/v2.1/?access_token=512796102214470|W_LPEqMadPUuI2PdXeRUlHUBkRI&id=http%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0010440X11001064"
   end
 
   # use depreciated v2.0 API if url_linkstat is used

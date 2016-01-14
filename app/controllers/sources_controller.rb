@@ -1,4 +1,5 @@
-class SourcesController < ApplicationController
+  class SourcesController < ApplicationController
+  require "resolv-replace.rb"
   before_filter :load_source, only: [:show, :edit, :update]
   load_and_authorize_resource
   skip_authorize_resource :only => [:show, :index]
@@ -8,13 +9,11 @@ class SourcesController < ApplicationController
     if current_user && current_user.publisher_id && @source.by_publisher?
       @publisher_option = PublisherOption.where(publisher_id: current_user.publisher_id, source_id: @source.id).first_or_create
     end
-
     render :show
   end
 
   def index
     @doc = Doc.find("sources")
-
     @groups = Group.includes(:sources).order("groups.id, sources.title")
   end
 

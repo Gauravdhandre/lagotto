@@ -70,4 +70,14 @@ namespace :cron do
     Rake::Task["mailer:work_statistics_report"].invoke
     Rake::Task["mailer:work_statistics_report"].reenable
   end
+  
+  # desc 'Minute cron task'
+  # task :minut => :environment do
+  #   puts "Deleting data..." 
+  #   if Work.count > 15000
+  #     Work.delete_all
+  #   end
+  # end
+
+
 end

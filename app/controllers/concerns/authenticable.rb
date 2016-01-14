@@ -17,7 +17,6 @@ module Authenticable
     def authenticate_user_from_token_param!
       token = params[:api_key].presence
       user = token && User.where(authentication_token: token).first
-
       if user && Devise.secure_compare(user.authentication_token, token)
         sign_in user, store: false
       else
@@ -29,7 +28,6 @@ module Authenticable
     def authenticate_user_from_token!
       authenticate_with_http_token do |token, options|
         user = token && User.where(authentication_token: token).first
-
         if user && Devise.secure_compare(user.authentication_token, token)
           sign_in user, store: false
         else
@@ -75,7 +73,7 @@ module Authenticable
       if status == 404
         message = "The page you are looking for doesn't exist."
       elsif status == 401
-        message = "You are not authorized to access this page."
+        message = "You are not authorized to access this page." 
       else
         create_alert(exception, status: status)
         message = exception.message

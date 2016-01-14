@@ -1,6 +1,5 @@
 class ApiSnapshotJob < ActiveJob::Base
   queue_as :high
-
   def perform(options={})
     ActiveRecord::Base.connection_pool.with_connection do
       id = options[:id] || raise(ArgumentError, "Must supply :id")

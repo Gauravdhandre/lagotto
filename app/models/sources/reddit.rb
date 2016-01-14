@@ -1,7 +1,6 @@
 class Reddit < Source
   def parse_data(result, work, options={})
     return result if result[:error]
-
     result = result.deep_fetch('data', 'children') { [] }
 
     likes = get_sum(result, 'data', 'score')

@@ -1,3 +1,4 @@
+
 <div class="panel panel-default">
   <div class="panel-heading panel-title">
     <% if can?(:create, User) && controller.action_name != "edit" && !(controller.action_name == "update" && !@user.errors.empty?) %>

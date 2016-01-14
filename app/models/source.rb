@@ -2,6 +2,30 @@ require 'cgi'
 require "addressable/uri"
 
 class Source < ActiveRecord::Base
+
+
+# States = {
+#   :pending => 0,
+#   :approved => 1,
+#   :rejected => 2,
+# }
+
+# state_machine :state, :initial => :pending do
+#   States.each do |name, value|
+#     state name, :value => value
+#   end
+
+#   event :approve do
+#     transition all => :approved
+#   end
+
+#   event :reject do
+#     transition all => :rejected
+#   end
+# end
+
+
+  
   # include state machine
   include Statable
 
@@ -100,14 +124,11 @@ class Source < ActiveRecord::Base
 
   def queue_all_works(options = {})
     return 0 unless active?
-
     # find works that need to be updated.
     # Tracked, not queued currently, scheduled_at doesn't matter
     rs = retrieval_statuses.tracked
-
     # optionally limit to works scheduled_at in the past
     rs = rs.stale unless options[:all]
-
     # optionally limit by publication date
     if options[:start_date] && options[:end_date]
       rs = rs.joins(:work).where("works.published_on" => options[:start_date]..options[:end_date])
@@ -245,6 +266,8 @@ class Source < ActiveRecord::Base
   def response_options
     {}
   end
+    
+#Get the Query_url For Source
 
   def get_query_url(work, options = {})
     fail ArgumentError, "Source url is missing." if url.blank?
@@ -364,7 +387,7 @@ class Source < ActiveRecord::Base
 
     # loop through cached attributes we want to update
     [:event_count,
-     :work_count,
+     :work_count, 
      :queued_count,
      :stale_count,
      :refreshed_count,

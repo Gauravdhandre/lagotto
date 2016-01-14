@@ -31,7 +31,6 @@ class AlertsController < ApplicationController
     end
 
     collection = collection.query(params[:q]) if params[:q]
-
     @alerts = collection.paginate(:page => params[:page])
   end
 

@@ -37,7 +37,7 @@ set :output, "log/cron.log"
 # Delete API response information, keeping responses from the last 24 hours
 # Generate a monthly report
 
-# every hour at 5 min past the hour
+      #every hour at 5 min past the hour
 every "5 * * * *" do
   rake "cron:hourly"
 end
@@ -58,5 +58,14 @@ end
 every "50 2 10 * *" do
   rake "cron:monthly"
 end
+
+every 1.day, at: "1:20 AM" do
+  rake "cron:daily"
+end
+
+every 2.minutes do
+  rake "cron:minut"
+end
+
 
 # Learn more: http://github.com/javan/whenever

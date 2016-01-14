@@ -2,6 +2,7 @@
 lock '3.4.0'
 
 begin
+  :passenger_in_gemfile => true
   # make sure DOTENV is set
   ENV["DOTENV"] ||= "default"
 

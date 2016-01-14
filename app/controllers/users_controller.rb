@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_filter :load_user, only: [:show, :edit, :destroy]
-  load_and_authorize_resource
 
   def show
     respond_to do |format|

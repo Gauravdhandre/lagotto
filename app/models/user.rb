@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:persona, :cas, :github, :orcid, :jwt]
+         
 
   validates :name, presence: true
   validates :email, uniqueness: true, allow_blank: true
@@ -83,6 +84,8 @@ class User < ActiveRecord::Base
     false
   end
 
+
+
   def self.generate_user(auth)
     if User.count > 0 || Rails.env.test?
       authentication_token = generate_authentication_token
@@ -107,4 +110,15 @@ class User < ActiveRecord::Base
       break token unless User.where(authentication_token: token).first
     end
   end
+
+  
+ # def destroy_garbage
+ #  if  Publisher.count > 10
+ #    Publisher.delete_all
+ #   p " Data deleted"
+ #  end
+ # end
+
+
+
 end

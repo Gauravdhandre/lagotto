@@ -4,10 +4,9 @@
   </div>
   <div class="panel-body">
     <dl class="dl-horizontal">
-      <% unless @source.group.blank? %>
+      <%   %>
         <dt>Group</dt>
         <dd><%= h(@source.group.title) %></dd>
-      <% end %>
       <% unless @source.description.blank? %>
         <dt>Description</dt>
         <dd><%= h(@source.description) %></dd>

@@ -58,6 +58,7 @@ namespace :queue do
     end
   end
 
+
   desc "Queue work with given pid"
   task :one, [:pid] => :environment do |_, args|
     if args.pid.nil?
@@ -94,6 +95,8 @@ namespace :queue do
       puts "Job for pid #{work.pid} and source #{source.title} has been queued."
     end
   end
+
+
 
   desc "Unqueue all works"
   task :reset => :environment do |_, args|

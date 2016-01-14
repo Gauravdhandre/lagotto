@@ -1,4 +1,5 @@
 class Twitter < Source
+  
   def get_query_url(work)
     return {} unless work.doi =~ /^10.1371/
 

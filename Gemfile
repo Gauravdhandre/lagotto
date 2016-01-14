@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
-ruby '2.2.2'
+ruby '2.2.3'
 gem 'rails', '~> 4.2.5'
 gem 'mysql2', '0.3.18'
-
+gem 'byebug'
 gem "dotenv", '~> 1.0.2'
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra'
@@ -30,13 +30,14 @@ gem "oj", "~> 2.10.4"
 gem 'safe_yaml', '~> 1.0.4'
 gem 'hashie', '~> 3.3.2'
 gem 'rubyzip',  "~> 1.1", :require => 'zip'
-gem "devise", "~> 3.4.1"
+gem "devise", "~> 3.5.0"
 gem "omniauth-persona"
 gem "omniauth-cas", "~> 1.1.0"
 gem 'omniauth-github', '~> 1.1.2'
 gem "omniauth-orcid", "~> 1.0"
 gem 'omniauth-jwt', '~> 0.0.3', git: 'https://github.com/datacite/omniauth-jwt.git'
 gem 'omniauth', '~> 1.2.2'
+gem 'omniauth-identity'
 gem 'cancancan', '~> 1.9.2'
 gem "validates_timeliness", "~> 3.0.14"
 gem "strip_attributes", "~> 1.2"
@@ -52,21 +53,27 @@ gem 'nilify_blanks', '~> 1.2.0'
 gem "github-markdown", "~> 0.6.3"
 gem "rouge", "~> 1.7.2"
 gem 'dotiw', '~> 2.0'
-
+gem 'passenger'
 gem 'sprockets-rails', '~> 2.2.0', :require => 'sprockets/railtie'
 gem 'sass-rails', '~> 4.0.4'
 gem "uglifier", "~> 2.5.3"
 gem 'coffee-rails', '~> 4.1.0'
 gem "ember-cli-rails"
-
 gem "zenodo", "~> 0.0.8"
 gem 'bootstrap-sass'
+gem 'thin'
+gem 'jquery-rails'
+gem 'figaro'
+gem 'puma' 
 
 group :development do
+  gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rvm'
+
   gem 'pry-rails', '~> 0.3.2'
   gem 'better_errors', '~> 2.0.0'
   gem 'binding_of_caller', '~> 0.7.2'
-  gem 'capistrano', '~> 3.4.0'
   gem 'capistrano-passenger', '~> 0.1.1'
   gem 'capistrano-rails', '~> 1.1.1', :require => false
   gem 'capistrano-bundler', '~> 1.1.2', :require => false

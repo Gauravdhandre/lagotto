@@ -31,6 +31,9 @@ Lagotto::Application.configure do
 
   # for devise
   config.action_mailer.default_url_options = { :host => "#{ENV['MAIL_ADDRESS']}:#{ENV['MAIL_PORT']}" }
+  config.consider_all_requests_local       = true
+  config.action_controller.perform_caching = true
+  config.cache_store = :dalli_store
 end
 
 BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']

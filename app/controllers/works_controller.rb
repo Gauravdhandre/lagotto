@@ -3,7 +3,6 @@ class WorksController < ApplicationController
   before_filter :new_work, only: [:create]
   load_and_authorize_resource
   skip_authorize_resource :only => [:show, :index]
-
   def index
     @page = params[:page] || 1
     @q = params[:q]

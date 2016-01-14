@@ -207,6 +207,9 @@ class Work < ActiveRecord::Base
   end
 
   def get_url
+    # canonical_url = 'http://abpo.revues.org/1501'
+    # doi = '10.4000/abpo.1501'
+    # id = 3248
     return true if canonical_url.present?
     return false unless doi.present?
 
