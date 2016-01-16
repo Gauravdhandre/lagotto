@@ -33,9 +33,11 @@ end
 # set :default_env, { 'DOTENV' => ENV["DOTENV"] }
 
 set :application, ENV["APPLICATION"]
-set :repo_url, "#{ENV['GITHUB_URL']}.git"
+#set :repo_url, "#{ENV['GITHUB_URL']}.git"
+set :repo_url, "https://github.com/ankurpohekar/Lagotto"
 set :stage, ENV["STAGE"]
-set :pty, false
+#set :pty, false
+set :pty, true
 
 # Default branch is :master
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
@@ -52,6 +54,8 @@ set :bugsnag_api_key, ENV["BUGSNAG_KEY"] if ENV["BUGSNAG_KEY"]
 # Default deploy_to directory is /var/www/my_app
 # set :deploy_to, '/var/www/lagotto'
 
+#Change Code
+set :deploy_to, '/Desktop/lagotto'
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -68,13 +72,45 @@ set :log_level, log_level
 # Default value for :linked_files is []
 # link .env file
 #set :linked_files, %W{ #{filename} }
-set :linked_files, %w{ .env }
+
+#set :linked_files, %w{ .env }
+
+#change code
+set :linked_files, %w{config/database.yml config/application.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{ log tmp/pids tmp/sockets tmp/files tmp/reports vendor/bundle frontend/node_modules frontend/bower_components }
+#set :linked_dirs, %w{ log tmp/pids tmp/sockets tmp/files tmp/reports vendor/bundle frontend/node_modules frontend/bower_components }
+
+#change Code
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
+
+#added line
+set :rvm_type, :user
+set :rvm_ruby_version, 'ruby-2.2.3'
+set :puma_rackup, -> { File.join(current_path, 'config.ru') }
+set :puma_state, "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
+set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"    #accept array for multi-bind
+set :puma_conf, "#{shared_path}/puma.rb"
+set :puma_access_log, "#{shared_path}/log/puma_error.log"
+set :puma_error_log, "#{shared_path}/log/puma_access.log"
+set :puma_role, :app
+set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+set :puma_threads, [0, 8]
+set :puma_workers, 0
+set :puma_worker_timeout, nil
+set :puma_init_active_record, true
+set :puma_preload_app, false
+
+
+
+
+
+
 
 # Install gems into shared/vendor/bundle
 set :bundle_path, -> { shared_path.join('vendor/bundle') }
