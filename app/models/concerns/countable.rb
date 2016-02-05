@@ -9,6 +9,7 @@ module Countable
 
     def event_count
       cache_read("event_count", retrieval_statuses.sum(:total))
+      #RetrievalStatus.sum(:total)
     end
 
     def event_count=(time)

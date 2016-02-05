@@ -11,8 +11,8 @@ class TwitterSearch < Source
     query_string = get_query_string(work)
     return {} unless query_string.present?
     fail ArgumentError, "No access token." unless get_access_token
-
     url % { query_string: query_string }
+    byebug
   end
 
   def parse_data(result, work, options={})
@@ -64,6 +64,7 @@ class TwitterSearch < Source
   end
 
   def get_extra(result)
+    
     Array(result['statuses']).map do |item|
       if item.key?("from_user")
         user = item["from_user"]
@@ -87,6 +88,7 @@ class TwitterSearch < Source
         event_time: event_time,
         event_url: url }
     end
+    byebug
   end
 
   # check whether we have stored additional tweets in the past
@@ -94,30 +96,31 @@ class TwitterSearch < Source
   # we need hash with indifferent access to compare string and symbol keys
   def update_extra(work, extra)
     data = HashWithIndifferentAccess.new(get_lagotto_data("twitter_search:#{work.doi_escaped}"))
-
     merged_extra = Array(data['extra']) | extra
     merged_extra.group_by { |event| event[:event][:id] }.map { |_, v| v.first }
   end
 
   def get_access_token(options={})
+    access_token = "AAAAAAAAAAAAAAAAAAAAAAMHjwAAAAAAYU%2FaF%2BBDnCP8aQ9vxk94x2ePWj4%3DgGbCw13LAdTNyKCDzz1YE0QaSVyXeUkUCWjT980wb50bB811KJ"
     # Check whether we already have an access token
     return true if access_token.present?
-
     # Otherwise get new access token
+    api_key = '3uv9RIDDByNmZpPpRqBvC3nmZ'
+    api_secret = 'Q4aHhH4nY0SmS7xLfWxCUXw37jZ2SoNdCav1DQmDvi5dWq8LvW'
+    bearer_token = Base64.encode64("#{api_key}:#{api_secret}") 
     result = get_result(authentication_url, options.merge(
       content_type: 'html',
-      username: api_key,
-      password: api_secret,
+      basic: bearer_token,
       data: "grant_type=client_credentials",
       source_id: id,
-      headers: { "Content-Type" => "application/x-www-form-urlencoded;charset=UTF-8" }))
-
+      headers: { "Content-Type" => "application/x-www-form-urlencoded;charset=UTF-8" }))    
     if result.present? && result["access_token"]
       config.access_token = result["access_token"]
       save
     else
       false
     end
+    byebug
   end
 
   def config_fields
@@ -125,42 +128,52 @@ class TwitterSearch < Source
   end
 
   def url
+    
     "https://api.twitter.com/1.1/search/tweets.json?q=%{query_string}&count=100&include_entities=1&result_type=recent"
   end
 
   def events_url
+    
     "https://twitter.com/search?q=%{query_string}&f=realtime"
   end
 
   def authentication_url
+    
     "https://api.twitter.com/oauth2/token"
   end
 
   def job_batch_size
+    
     config.job_batch_size || 100
   end
 
   def rate_limiting
+    
     config.rate_limiting || 1800
   end
 
   def staleness_week
+    
     config.staleness_week || 1.day
   end
 
   def staleness_month
+    
     config.staleness_month || 1.day
   end
 
   def staleness_year
+    
     config.staleness_year || (1.month * 0.25).to_i
   end
 
   def staleness_all
+    
     config.staleness_all || (1.month * 0.25).to_i
   end
 
   def queue
+    
     config.queue || "low"
   end
 end

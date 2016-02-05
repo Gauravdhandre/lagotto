@@ -7,7 +7,7 @@ gem 'byebug'
 gem "dotenv", '~> 1.0.2'
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra'
-gem 'rake', '~> 10.4.2'
+gem 'rake', '~> 10.5.0'
 gem "whenever", "~> 0.9.0", require: false
 gem 'parse-cron', '~> 0.1.4'
 gem "mail", "~> 2.6.1"
@@ -17,7 +17,7 @@ gem "state_machine", "~> 1.2.0", :git => 'https://github.com/fly1tkg/state_machi
 gem "logstash-logger", "~> 0.7.0"
 gem 'bugsnag', '~> 2.8.6'
 gem 'sentry-raven', '~> 0.14.0'
-
+gem 'memcachier'
 gem "faraday", "~> 0.9.0"
 gem "faraday_middleware", "~> 0.9.1"
 gem 'excon', '~> 0.45.3'

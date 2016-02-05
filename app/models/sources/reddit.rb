@@ -2,11 +2,25 @@ class Reddit < Source
   def parse_data(result, work, options={})
     return result if result[:error]
     result = result.deep_fetch('data', 'children') { [] }
-
+    File.open('/home/lagottowork/Result.txt','w') do |f|
+      result.each do |i|
+      f.puts i
+      end 
+    end
+    p "File Created"
+    byebug
     likes = get_sum(result, 'data', 'score')
     comments = get_sum(result, 'data', 'num_comments')
     total = likes + comments
     related_works = get_related_works(result, work)
+    File.open('/home/lagottowork/RelatedWorks.txt','w') do |f|
+      related_works.each do |i|
+      f.puts i
+      end
+    end    
+    p "File Created"
+    byebug
+
     extra = get_extra(result)
     events_url = total > 0 ? get_events_url(work) : nil
 
@@ -75,7 +89,7 @@ class Reddit < Source
   end
 
   def events_url
-    "http://www.reddit.com/search?q=%{query_string}"
+    "http://www.reddit.com/search?q=%{query_string}" #query_string is combination of DOI and canonical url
   end
 
   def job_batch_size

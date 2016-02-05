@@ -47,7 +47,6 @@
 
   def load_source
     @source = Source.where(name: params[:id]).first
-
     # raise error if source wasn't found
     fail ActiveRecord::RecordNotFound, "No record for \"#{params[:id]}\" found" if @source.blank?
   end
